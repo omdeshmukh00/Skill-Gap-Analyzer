@@ -1,56 +1,62 @@
-import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
-import './globals.css'
-import { Navbar } from '@/components/layout/navbar'
-import { ThemeProvider } from '@/components/theme-provider'
+import type { Metadata } from "next"
+import { Geist, Geist_Mono } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
+import { ClerkProvider } from "@clerk/nextjs"
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+import "./globals.css"
+import Navbar from "@/components/layout/navbar"
+import { ThemeProvider } from "@/components/theme-provider"
+
+const geistSans = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+})
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+})
 
 export const metadata: Metadata = {
-  title: 'AI Skill Gap Analyzer | Career Advisor',
-  description: 'Discover the skills you need to reach your dream career with AI-powered analysis and personalized learning roadmaps.',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
+  title: "AI Skill Gap Analyzer | Career Advisor",
+  description:
+    "Discover the skills you need to reach your dream career with AI-powered analysis and personalized learning roadmaps.",
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className="font-sans antialiased min-h-screen flex flex-col bg-background text-foreground selection:bg-primary/30">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navbar />
-          <div className="flex-1">
-            {children}
-          </div>
-          <Analytics />
-        </ThemeProvider>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}
+      suppressHydrationWarning
+    >
+      <body className="font-sans antialiased min-h-screen flex flex-col bg-background text-foreground">
+
+        <ClerkProvider>
+
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+
+            <Navbar />
+
+            <main className="flex-1">
+              {children}
+            </main>
+
+            <Analytics />
+
+          </ThemeProvider>
+
+        </ClerkProvider>
+
       </body>
     </html>
   )
