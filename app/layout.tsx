@@ -37,14 +37,12 @@ export default function RootLayout({
       <body className="font-sans antialiased min-h-screen flex flex-col bg-background text-foreground">
 
         <ClerkProvider>
-
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
-
             <Navbar />
 
             <main className="flex-1">
@@ -52,9 +50,7 @@ export default function RootLayout({
             </main>
 
             <Analytics />
-
           </ThemeProvider>
-
         </ClerkProvider>
 
       </body>

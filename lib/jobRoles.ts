@@ -74,3 +74,4 @@ export const jobRoles: Record<string, string[]> = {
     "OpenAI API"
   ]
 }
+ 
